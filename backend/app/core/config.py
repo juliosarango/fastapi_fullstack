@@ -94,6 +94,13 @@ class Settings(BaseSettings):
     # TODO: update type to EmailStr when sqlmodel supports it
     FIRST_SUPERUSER: str
     FIRST_SUPERUSER_PASSWORD: str
+    # api 
+    API_URL_TOKENS: str = "" 
+    API_AUTHORIZATION: str = ""
+    API_AUTHORIZATION_USERNAME: str = ""
+    API_AUTHORIZATION_PASSWORD: str = ""
+    API_URL_COTIZACIONES: str = ""
+    API_URL_EMISIONES: str = ""
 
     def _check_default_secret(self, var_name: str, value: str | None) -> None:
         if value == "changethis":
@@ -114,7 +121,6 @@ class Settings(BaseSettings):
             "FIRST_SUPERUSER_PASSWORD", self.FIRST_SUPERUSER_PASSWORD
         )
 
-        return self
-
+        return self    
 
 settings = Settings()  # type: ignore

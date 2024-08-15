@@ -4,7 +4,7 @@ from app.api.deps import (
     SessionDep,
     get_current_active_superuser,
 )
-from app.util_seguros import obtener_emisiones
+from app.util_seguros import generar_emisiones, obtener_emision
 from app.models import PlanRequest
 from app.core.config import settings
 
@@ -15,5 +15,12 @@ router = APIRouter()
     "/",
     # dependencies=[Depends(get_current_active_superuser)],
 )
-def consultar_cotizaciones(data: PlanRequest):    
-    return obtener_emisiones(data.dict())
+def ingresar_plan(data: PlanRequest):    
+    return generar_emisiones(data.dict())
+
+@router.get(
+    "/{id}",
+    # dependencies=[Depends(get_current_active_superuser)],
+)
+def consultar_plan(id: str):
+    return obtener_emision(id)

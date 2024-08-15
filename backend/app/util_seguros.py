@@ -30,10 +30,16 @@ def refresh_token(refresh_token):
     else:
         raise Exception(response)
     
-def obtener_cotizaciones(data):
+def obtener_access_token():
     _refresh_token = generate_token()
     access_token = refresh_token(_refresh_token)
-        
+    return access_token
+
+
+    
+def obtener_cotizaciones(data):
+    
+    access_token = obtener_access_token()
     headers = {
         'Authorization': f"Bearer {access_token}",
     }
@@ -45,9 +51,8 @@ def obtener_cotizaciones(data):
         raise Exception(response)
     
     
-def obtener_emisiones(data):
-    _refresh_token = generate_token()
-    access_token = refresh_token(_refresh_token)
+def generar_emisiones(data):
+    access_token = obtener_access_token()
         
     headers = {
         'Authorization': f"Bearer {access_token}",
@@ -60,3 +65,17 @@ def obtener_emisiones(data):
     else:
         raise Exception(response)
     
+
+def obtener_emision(id):
+    access_token = obtener_access_token()
+
+    headers = {
+        'Authorization': f"Bearer {access_token}",
+    }
+
+    response = requests.get(f"{settings.API_URL_EMISIONES}/{id}", headers=headers).json()
+
+    if response:
+        return response
+    else:
+        raise Exception(response)
